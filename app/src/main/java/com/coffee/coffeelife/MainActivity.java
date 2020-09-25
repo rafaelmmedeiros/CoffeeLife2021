@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void historico(View v) {
+        Intent intent = new Intent(MainActivity.this, HistoricoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+    }
+
     // FUNÇÔES DE ESTATISTICAS
     public void totalCoffees() {
         CoffeeDAO coffeeDAO = new CoffeeDAO(this);
