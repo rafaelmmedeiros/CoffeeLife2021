@@ -54,6 +54,7 @@ public class CoffeeDAO {
                 Coffee coffee = new Coffee();
                 coffee.setPk_coffee(Integer.parseInt(cursor.getString(0)));
                 coffee.setTipo(cursor.getString(1));
+                coffee.setData(cursor.getString(2));
 
                 // 3.1. adicionar o func a lista de funcionarios
                 coffeeList.add(coffee);
@@ -69,7 +70,17 @@ public class CoffeeDAO {
     public long totalCoffees() {
 
         this.db = mySQLiteHelper.getWritableDatabase();
-        SQLiteStatement s = db.compileStatement( "select count(*) from tb_coffees;");
+        SQLiteStatement s = db.compileStatement("select count(*) from tb_coffees;");
+        long total = s.simpleQueryForLong();
+        db.close();
+
+        return total;
+    }
+
+    public long totalCoffeesHoje() {
+
+        this.db = mySQLiteHelper.getWritableDatabase();
+        SQLiteStatement s = db.compileStatement("select count(*) from tb_coffees WHERE created_at >= date('now');");
         long total = s.simpleQueryForLong();
         db.close();
 

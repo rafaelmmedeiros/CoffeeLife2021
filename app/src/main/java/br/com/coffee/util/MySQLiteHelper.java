@@ -18,7 +18,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         String sqlCreateTableTbcoffees =
                 "CREATE TABLE IF NOT EXISTS tb_coffees ("
                         + "pk_coffee integer PRIMARY KEY AUTOINCREMENT,"
-                        + "tipo varchar(70) NOT NULL);";
+                        + "tipo varchar(70) NOT NULL,"
+                        + "created_at TIMESTAMP default current_timestamp);";
 
         // create tb_coffees table
         db.execSQL(sqlCreateTableTbcoffees);

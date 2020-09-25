@@ -41,7 +41,7 @@ public class RegistrarCafeActivity extends AppCompatActivity {
         ArrayList<String> coffeeListDetalhado = new ArrayList<String>();
 
         for (Coffee f : coffeeList) {
-            coffeeListDetalhado.add("Tipo: " + f.getTipo());
+            coffeeListDetalhado.add("Tipo: " + f.getTipo() + " - Data: " + f.getData());
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, coffeeListDetalhado);
