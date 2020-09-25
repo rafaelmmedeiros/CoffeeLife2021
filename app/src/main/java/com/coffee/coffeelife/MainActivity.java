@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import br.com.coffee.dao.CoffeeDAO;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
         long total = coffeeDAO.totalCoffees();
         String totalShow = Long.toString(total);
 
-
-        Double litros = total * 0.12;
-        String string_litros = Double.toString(litros);
-
-        textTotalLitros.setText(string_litros);
         textTotalCooffees.setText(totalShow);
     }
 
@@ -60,7 +58,13 @@ public class MainActivity extends AppCompatActivity {
         long total = coffeeDAO.totalCoffeesHoje();
         String toshow = Long.toString(total);
 
+        Double litros = total * 0.12;
 
+        NumberFormat nf = DecimalFormat.getInstance();
+        nf.setMaximumFractionDigits(2);
+        String str = nf.format(litros);
+
+        textTotalLitros.setText(str);
         textTotalCooffeesHoje.setText(toshow);
     }
 
