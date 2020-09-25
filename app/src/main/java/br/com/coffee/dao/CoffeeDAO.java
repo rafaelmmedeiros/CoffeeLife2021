@@ -24,11 +24,11 @@ public class CoffeeDAO {
         this.db = mySQLiteHelper.getWritableDatabase();
 
         // 2. preparar uma ContentValues com os parametros para insert
-        ContentValues cv = new ContentValues();
-        cv.put("tipo", coffee.getTipo());
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("tipo", coffee.getTipo());
 
         // 3. realizar o insert
-        long retorno = db.insert("tb_coffees", null, cv);
+        long retorno = db.insert("tb_coffees", null, contentValues);
 
         // 4. fechar o banco e dar o retorno
         db.close();
