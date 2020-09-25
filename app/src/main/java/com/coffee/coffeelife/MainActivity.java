@@ -22,13 +22,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         totalCoffees();
     }
 
-    // ACTIVITIES CHANGES
+    // ACTIVITIES INTENTS
     public void registrarCafe(View v) {
         Intent intent = new Intent(MainActivity.this, RegistrarCafeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
