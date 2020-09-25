@@ -12,7 +12,8 @@ import br.com.coffee.dao.CoffeeDAO;
 public class MainActivity extends AppCompatActivity {
 
     private TextView textTotalCooffees;
-    private TextView getTextTotalCooffeesHoje;
+    private TextView textTotalCooffeesHoje;
+    private TextView textTotalLitros;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textTotalCooffees = (TextView) findViewById(R.id.tv_total_coffees);
-        getTextTotalCooffeesHoje = (TextView) findViewById(R.id.tv_total_coffees_hoje);
-
+        textTotalCooffeesHoje = (TextView) findViewById(R.id.tv_total_coffees_hoje);
+        textTotalLitros = (TextView) findViewById(R.id.tv_total_coffees_litros);
     }
 
     @Override
@@ -43,9 +44,14 @@ public class MainActivity extends AppCompatActivity {
         CoffeeDAO coffeeDAO = new CoffeeDAO(this);
 
         long total = coffeeDAO.totalCoffees();
-        String toshow = Long.toString(total);
+        String totalShow = Long.toString(total);
 
-        textTotalCooffees.setText(toshow);
+
+        Double litros = total * 0.12;
+        String string_litros = Double.toString(litros);
+
+        textTotalLitros.setText(string_litros);
+        textTotalCooffees.setText(totalShow);
     }
 
     public void totalCoffeesHoje() {
@@ -54,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
         long total = coffeeDAO.totalCoffeesHoje();
         String toshow = Long.toString(total);
 
-        getTextTotalCooffeesHoje.setText(toshow);
+
+        textTotalCooffeesHoje.setText(toshow);
     }
 
 }
