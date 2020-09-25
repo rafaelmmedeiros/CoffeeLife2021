@@ -19,16 +19,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textTotalCooffees = (TextView) findViewById(R.id.tv_totalcoffees);
+    }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
         totalCoffees();
     }
 
+    // ACTIVITIES CHANGES
     public void registrarCafe(View v) {
         Intent intent = new Intent(MainActivity.this, RegistrarCafeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
+    // FUNÇÔES DE ESTATISTICAS
     public void totalCoffees() {
         CoffeeDAO coffeeDAO = new CoffeeDAO(this);
 
