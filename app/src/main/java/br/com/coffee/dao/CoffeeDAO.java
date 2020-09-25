@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 import br.com.coffee.model.Coffee;
 import br.com.coffee.util.MySQLiteHelper;
@@ -20,6 +21,7 @@ public class CoffeeDAO {
     }
 
     public long gravar(Coffee coffee) throws SQLException {
+
         // 1. recupera a referencia do db
         this.db = mySQLiteHelper.getWritableDatabase();
 
@@ -61,6 +63,17 @@ public class CoffeeDAO {
         // 4. fechar o banco e dar o retorno
         db.close();
         return coffeeList;
+    }
+
+    // Consultas Estatisticas
+    public long totalCoffees() {
+
+        this.db = mySQLiteHelper.getWritableDatabase();
+        SQLiteStatement s = db.compileStatement( "select count(*) from tb_coffees;");
+        long total = s.simpleQueryForLong();
+        db.close();
+
+        return total;
     }
 
 }
