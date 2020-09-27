@@ -8,11 +8,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-
-import java.util.ArrayList;
 
 import br.com.coffee.dao.CoffeeDAO;
 import br.com.coffee.model.Coffee;
@@ -46,6 +41,46 @@ public class RegistrarCafeActivity extends AppCompatActivity {
 
         mensagem.setTitle("Sucesso!");
         mensagem.setMessage("Café Tradicional Registrado.");
+        mensagem.setNeutralButton("OK", null);
+
+        mensagem.show();
+    }
+
+    public void registrarCoffeeLeite(View v) {
+
+        Coffee coffee = new Coffee();
+        CoffeeDAO CoffeeDAO = new CoffeeDAO(this);
+
+        coffee.setTipo("Café com Leite");
+        CoffeeDAO.gravar(coffee);
+
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(100);
+
+        clickSound.start();
+
+        mensagem.setTitle("Sucesso!");
+        mensagem.setMessage("Café com Leite Registrado.");
+        mensagem.setNeutralButton("OK", null);
+
+        mensagem.show();
+    }
+
+    public void registrarCoffeeExpresso(View v) {
+
+        Coffee coffee = new Coffee();
+        CoffeeDAO CoffeeDAO = new CoffeeDAO(this);
+
+        coffee.setTipo("Expresso");
+        CoffeeDAO.gravar(coffee);
+
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(100);
+
+        clickSound.start();
+
+        mensagem.setTitle("Sucesso!");
+        mensagem.setMessage("Café Expresso Registrado.");
         mensagem.setNeutralButton("OK", null);
 
         mensagem.show();

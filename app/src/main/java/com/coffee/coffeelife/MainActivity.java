@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.ProgressBar;
 
 
@@ -24,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        // TROCAR POR UM USO REAL DE LOADING
         progress = (ProgressBar) findViewById(R.id.loading_bar);
         handler = new Handler();
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     final int value = i;
                     try {
                         //define 1/10 segundo como o tempo para a barra
-                        Thread.sleep(100);
+                        Thread.sleep(20);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
