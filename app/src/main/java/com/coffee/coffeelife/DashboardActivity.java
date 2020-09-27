@@ -22,7 +22,8 @@ public class DashboardActivity extends AppCompatActivity {
     protected static final int SUBMENU1 = 21;
     protected static final int SUBMENU2 = 22;
     protected static final int SUBMENU3 = 23;
-    protected static final int MENU4 = 3;
+    protected static final int MENU3 = 3;
+    protected static final int MENU4 = 4;
 
     // COMPONENTES VIEW
     private TextView textTotalCooffees;
@@ -50,7 +51,7 @@ public class DashboardActivity extends AppCompatActivity {
         sub.add(0, SUBMENU1, 0, "Hoje");
         sub.add(0, SUBMENU2, 1, "Semana");
         sub.add(0, SUBMENU3, 2, "Todos");
-
+        menu.add(0, MENU3, 4, "Mapa do Café");
         menu.add(0, MENU4, 4, "Sair");
 
         return true;
@@ -79,6 +80,11 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent historicoTotal = new Intent(DashboardActivity.this, HistoricoActivity.class);
                 historicoTotal.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(historicoTotal);
+                break;
+            case MENU3:
+                Intent mapaCafe = new Intent(DashboardActivity.this, MapsActivity.class);
+                mapaCafe.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(mapaCafe);
                 break;
             case MENU4:
                 System.exit(0);
