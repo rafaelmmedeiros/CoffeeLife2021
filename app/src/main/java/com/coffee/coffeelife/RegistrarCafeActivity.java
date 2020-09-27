@@ -2,7 +2,11 @@ package com.coffee.coffeelife;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -15,37 +19,36 @@ import br.com.coffee.model.Coffee;
 
 public class RegistrarCafeActivity extends AppCompatActivity {
 
-    ListView listView;
+    protected AlertDialog.Builder mensagem;
+    MediaPlayer clickSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_cafe);
 
-        listView = (ListView) findViewById(R.id.lstView);
+        mensagem = new AlertDialog.Builder(this);
+        clickSound = MediaPlayer.create(this, R.raw.click);
     }
 
-    public void registrarCoffee(View v) {
+    public void registrarCoffeeTradicional(View v) {
 
         Coffee coffee = new Coffee();
         CoffeeDAO CoffeeDAO = new CoffeeDAO(this);
 
-        //popular os dados do coffee
-        coffee.setTipo(((EditText) findViewById(R.id.edtTxtNome)).getText().toString());
-
-        //inserir no BD
+        coffee.setTipo("Tradicional");
         CoffeeDAO.gravar(coffee);
 
-        //recuperar todos para exibir na lista
-        ArrayList<Coffee> coffeeList = CoffeeDAO.recuperarTodos();
-        ArrayList<String> coffeeListDetalhado = new ArrayList<String>();
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(100);
 
-        for (Coffee f : coffeeList) {
-            coffeeListDetalhado.add("Tipo: " + f.getTipo() + " - Data: " + f.getData());
-        }
+        clickSound.start();
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, coffeeListDetalhado);
-        listView.setAdapter(arrayAdapter);
+        mensagem.setTitle("Sucesso!");
+        mensagem.setMessage("Café Tradicional Registrado.");
+        mensagem.setNeutralButton("OK", null);
 
+        mensagem.show();
     }
+
 }

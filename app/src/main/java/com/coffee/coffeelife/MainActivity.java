@@ -4,135 +4,66 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SubMenu;
+import android.os.Handler;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
-import br.com.coffee.dao.CoffeeDAO;
 
 public class MainActivity extends AppCompatActivity {
 
-    // MUNO ORDEM
-    protected static final int MENU1 = 1;
-    protected static final int SUBMENU = 2;
-    protected static final int SUBMENU1 = 21;
-    protected static final int SUBMENU2 = 22;
-    protected static final int SUBMENU3 = 23;
-    protected static final int MENU4 = 3;
+    private static int SPLASH_TIME_OUT = 1000;
 
-    private TextView textTotalCooffees;
-    private TextView textTotalCooffeesHoje;
-    private TextView textTotalLitros;
+    private Handler handler;
+    private ProgressBar progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textTotalCooffees = (TextView) findViewById(R.id.tv_total_coffees);
-        textTotalCooffeesHoje = (TextView) findViewById(R.id.tv_total_coffees_hoje);
-        textTotalLitros = (TextView) findViewById(R.id.tv_total_coffees_litros);
+        getSupportActionBar().hide();
+
+        progress = (ProgressBar) findViewById(R.id.loading_bar);
+        handler = new Handler();
+
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                for (int i = 1; i <= 100; i++) {
+                    final int value = i;
+                    try {
+                        //define 1/10 segundo como o tempo para a barra
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //define o valor para a barra
+                            progress.setProgress(value);
+                        }
+                    });
+                }
+                Intent dashBoardIntent = new Intent(MainActivity.this, DashboardActivity.class);
+                startActivity(dashBoardIntent);
+                finish();
+            }
+        };
+
+        new Thread(runnable).start();
+
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                Intent dashBoardIntent = new Intent(MainActivity.this, DashboardActivity.class);
+//                startActivity(dashBoardIntent);
+//                finish();
+//            }
+//        }, SPLASH_TIME_OUT);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // cria uma opção para o menu
-        // menu.add(grupo para o item de menu, indice do item do menu, ordem de exibicao, titulo para o menu)
-        menu.add(0, MENU1, 0, "Registro");
-
-        // cria um sub menu
-        SubMenu sub = menu.addSubMenu(0, 0, SUBMENU, "Historico");
-        sub.add(0, SUBMENU1, 0, "Hoje");
-        sub.add(0, SUBMENU2, 1, "Semana");
-        sub.add(0, SUBMENU3, 2, "Todos");
-
-        menu.add(0, MENU4, 4, "Sair");
-
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int i = item.getItemId();
-
-        switch (i) {
-            case MENU1:
-                Intent registrarCafe = new Intent(MainActivity.this, RegistrarCafeActivity.class);
-                registrarCafe.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(registrarCafe);
-                break;
-            case SUBMENU1:
-                Intent historicoHoje = new Intent(MainActivity.this, HistoricoActivity.class);
-                historicoHoje.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(historicoHoje);
-                break;
-            case SUBMENU2:
-                Intent historicoSemana = new Intent(MainActivity.this, HistoricoActivity.class);
-                historicoSemana.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(historicoSemana);
-                break;
-            case SUBMENU3:
-                Intent historicoTotal = new Intent(MainActivity.this, HistoricoActivity.class);
-                historicoTotal.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(historicoTotal);
-                break;
-            case MENU4:
-                System.exit(0);
-                break;
-        }
-
-        return false;
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        totalCoffees();
-        totalCoffeesHoje();
-    }
-
-    // ACTIVITIES INTENTS
-    public void registrarCafe(View v) {
-        Intent intent = new Intent(MainActivity.this, RegistrarCafeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
-    }
-
-    public void historico(View v) {
-        Intent intent = new Intent(MainActivity.this, HistoricoActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
-    }
-
-    // FUNÇÔES DE ESTATISTICAS
-    public void totalCoffees() {
-        CoffeeDAO coffeeDAO = new CoffeeDAO(this);
-
-        long total = coffeeDAO.totalCoffees();
-        String totalShow = Long.toString(total);
-
-        textTotalCooffees.setText(totalShow);
-    }
-
-    public void totalCoffeesHoje() {
-        CoffeeDAO coffeeDAO = new CoffeeDAO(this);
-
-        long total = coffeeDAO.totalCoffeesHoje();
-        String toshow = Long.toString(total);
-
-        Double litros = total * 0.12;
-
-        NumberFormat nf = DecimalFormat.getInstance();
-        nf.setMaximumFractionDigits(2);
-        String str = nf.format(litros);
-
-        textTotalLitros.setText(str);
-        textTotalCooffeesHoje.setText(toshow);
-    }
 
 }
