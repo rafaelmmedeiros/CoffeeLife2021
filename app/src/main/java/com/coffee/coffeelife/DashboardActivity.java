@@ -67,11 +67,13 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(registrarCafe);
                 break;
             case SUBMENU1:
+                // IMPLEMENTAR FUNCAO REAL
                 Intent historicoHoje = new Intent(DashboardActivity.this, HistoricoActivity.class);
                 historicoHoje.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(historicoHoje);
                 break;
             case SUBMENU2:
+                // IMPLEMENTAR FUNCAO REAL
                 Intent historicoSemana = new Intent(DashboardActivity.this, HistoricoActivity.class);
                 historicoSemana.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(historicoSemana);
